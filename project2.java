@@ -31,11 +31,8 @@ public class project2 {
         System.out.println("------------------------------------------------------------------");
 
         SubsetRecord optimal = basicplans.get(basicplans.size()-1);
-        // ArrayList<SubsetRecord> subsets = new ArrayList<>();
         ArrayList<SubsetRecord> logicTerms = new ArrayList<>();
         helper.getLogicAndTerms(optimal, logicTerms);
-        // System.out.println("logicTerms");
-        // System.out.println(logicTerms.size());
 
         if (optimal.left == null && optimal.right == null && optimal.noBranching == 1) {
             System.out.println("answer[j] = i;");
@@ -51,7 +48,6 @@ public class project2 {
     }
 
     public static String getLogicTermStr(SubsetRecord sub) {
-        //(t1[o1[i]] & t9[o9[i]])
         ArrayList<Integer> ele = new ArrayList<>(sub.elements);
         String str = "(";
 
@@ -69,14 +65,7 @@ public class project2 {
 
 
     public static void printOptimalPlan(ArrayList<SubsetRecord> subsets) {
-        // System.out.println(optimal.elements);
-        // System.out.println(optimal.left == null);
-        // System.out.println(optimal.noBranching);
         String noBranch ="";
-        // int j = subsets.get(0).noBranch();
-
-        // System.out.println(j);
-
         System.out.print("if (");
         for (int i=0; i < subsets.size(); i++) {
             if (subsets.get(i).noBranching == 0) {
@@ -88,7 +77,7 @@ public class project2 {
                 if (subsets.get(i+1).noBranching == 0) {
                     System.out.print(" && ");
                 } else {
-                // noBranch = getLogicTermStr(subsets.get(i+1));
+                    noBranch = getLogicTermStr(subsets.get(i+1));
                 }
             }
             
@@ -98,7 +87,7 @@ public class project2 {
             System.out.println("\tanswer[j++] = i;\n}") ;
         } else {
             String out = "\tanswer[j++] = i;\n\tj += " + noBranch;
-            System.out.print(out);
+            System.out.println(out);
 
         }
 
@@ -109,19 +98,7 @@ public class project2 {
 
     public static void optimize(ArrayList<Float> products) {
          //generate all basic plans
-
         ArrayList<SubsetRecord> basicplans = helper.generateBasicPlans(products);
-
-        // for (SubsetRecord s : basicplans) {
-        //     // System.out.println(s.elements);
-
-        //     System.out.println(s.selectivity);
-        //        System.out.println(s.number);
-        //     System.out.println(s.bestcost);
-        //     // System.out.println(s.noBranching);
-
-        // }
-        // System.out.println(basicplans.size());
         for (SubsetRecord s: basicplans) {
             for (SubsetRecord s2 : basicplans) {        
                 HashSet<Integer> retain = new HashSet<Integer>(s2.elements);
@@ -137,61 +114,23 @@ public class project2 {
                     //do nothing by lemma 4.9
                     continue;
                 } else {
-                    //calculate the cost for (s'&&s)
-                    // System.out.println("update!!");     
+                    //calculate the cost for (s'&&s)    
                     float p = s2.selectivity;
                     float q = Math.min(p, 1 - p);
                     float unionCost = helper.getFcost(s2) + helper.getMval()*q + p*s.bestcost;
-
-                    // System.out.println("====");
-                   
-                    // System.out.println("getFcost(s2)++ helper.getMval()*q");
-                    // System.out.println(helper.getFcost(s2) + helper.getMval()*q);
-                    // System.out.println("p*s.bestcost");
-                    // System.out.println(p*s.bestcost);
-                     // System.out.println("unionCost");
-                    // System.out.println(unionCost); 
-                     // System.out.println("====");
-                    
                     //update Uninton SubsetRecord
                     int index = helper.findUnionIndex(s, s2, basicplans);
                     SubsetRecord unionSub = basicplans.get(index);
-                    // System.out.println("unionSub.index");
-                    // System.out.println(index);
-                    // System.out.println("unionSub.bestcost");
-                    // System.out.println(unionSub.bestcost);
-
                     if (unionCost < unionSub.bestcost) {
                         unionSub.bestcost = unionCost;
                         unionSub.left = s2;
-                        unionSub.right = s;
-                        // System.out.println("update!!");     
+                        unionSub.right = s;  
                     } 
-
-                    //print infor
-                    // System.out.println("index");
-                    // System.out.println(index);
-                    // System.out.println(unionSub.bestcost);
-                    // System.out.println(basicplans.get(index).bestcost);
                 }      
                     
             }
         }
-
-        printResults(basicplans, products);
-
-        // for (SubsetRecord s : basicplans) {
-        //     // System.out.println(s.elements);
-
-        //     // System.out.println(s.selectivity);
-        //     //    System.out.println(s.number);
-        //     // System.out.println(s.bestcost);
-        //     System.out.println("s.noBranching");
-        //     System.out.println(s.noBranching);
-
-        // }
-        System.out.println(basicplans.size());
-    
+        printResults(basicplans, products);    
     }
     public static void main(String[] args) {
         // TODO code application logic here
