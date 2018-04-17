@@ -21,31 +21,66 @@ public class project2 {
     /**
      * @param args the command line arguments
      */
-    public static void printResults(ArrayList<SubsetRecord> basicplans, ArrayList<Float> products) {
-        System.out.println("==================================================================");
+    public static String printResults(ArrayList<SubsetRecord> basicplans, ArrayList<Float> products) {
+        String finalstr = "";
+        finalstr += "==================================================================\n";
+
+        // System.out.println("==================================================================");
         String s = "";
         for (Float p : products) {
             s += String.valueOf(p) + " ";
         }
-        System.out.println(s);
-        System.out.println("------------------------------------------------------------------");
+        // System.out.println(s);
+        // System.out.println("------------------------------------------------------------------");
+        finalstr += s;
+        finalstr += "\n------------------------------------------------------------------\n";
 
         SubsetRecord optimal = basicplans.get(basicplans.size()-1);
         ArrayList<SubsetRecord> logicTerms = new ArrayList<>();
         helper.getLogicAndTerms(optimal, logicTerms);
 
         if (optimal.left == null && optimal.right == null && optimal.noBranching == 1) {
-            System.out.println("answer[j] = i;");
-            System.out.println("j += ");         
-            System.out.println(getLogicTermStr(optimal));
+            // System.out.println("answer[j] = i;");
+            // System.out.print("j += ");         
+            // System.out.print(getLogicTermStr(optimal));
+            // System.out.println(";");
+            finalstr += "answer[j] = i;\n";
+            finalstr += "j += ";
+            finalstr += getLogicTermStr(optimal);
+            finalstr += ";\n";
+
         } else {
-            printOptimalPlan(logicTerms);
+            String out = printOptimalPlan(logicTerms);
+            finalstr += out;
         }
     
-        System.out.println("------------------------------------------------------------------");
-        System.out.print("cost:");
-        System.out.println(optimal.bestcost);
+        // System.out.println("------------------------------------------------------------------");
+        // System.out.print("cost:");
+        // System.out.println(optimal.bestcost);
+
+        finalstr += "------------------------------------------------------------------\n";
+        finalstr += "cost:";
+        finalstr += optimal.bestcost;
+        finalstr +="\n\n";
+
+        return finalstr;
+
     }
+
+    public static void writeToFile(String finalstr) {
+        try {
+            File file = new File("output.txt");
+            if (!file.exists()) {
+                file.createNewFile();
+            }
+            FileWriter fw = new FileWriter(file);
+            fw.write(finalstr);
+            fw.close();
+        } catch (IOException e) {
+             e.printStackTrace();
+        }
+    }
+     
 
     public static String getLogicTermStr(SubsetRecord sub) {
         ArrayList<Integer> ele = new ArrayList<>(sub.elements);
@@ -55,48 +90,50 @@ public class project2 {
             str += "t" + ele.get(i) + "[o" + ele.get(i) + "[i]"+ "]";
             if (i != ele.size()-1) {
                 str+= " & ";
-            }
-            
+            }           
         }
         str += ")";
         return str;
-
     }
 
 
-    public static void printOptimalPlan(ArrayList<SubsetRecord> subsets) {
+  public static String printOptimalPlan(ArrayList<SubsetRecord> subsets) {
+        String finalout = "";
         String noBranch ="";
-        System.out.print("if (");
+        finalout += "if (";
+        // System.out.print("if (");
         for (int i=0; i < subsets.size(); i++) {
             if (subsets.get(i).noBranching == 0) {
                 String out = getLogicTermStr(subsets.get(i));
-                System.out.print(out);
+                // System.out.print(out);
+                finalout += out;
             }
            
             if (i != subsets.size()-1) {
                 if (subsets.get(i+1).noBranching == 0) {
-                    System.out.print(" && ");
+                    // System.out.print(" && ");
+                    finalout += " && ";
                 } else {
                     noBranch = getLogicTermStr(subsets.get(i+1));
                 }
             }
             
         }
-        System.out.println(" &) {") ;
+        // System.out.println(" {") ;
+        finalout += " {\n";
         if (noBranch.length() == 0) {
-            System.out.println("\tanswer[j++] = i;\n}") ;
+            // System.out.println("\tanswer[j++] = i;\n}") ;
+            finalout += "\tanswer[j++] = i;\n}";
         } else {
-            String out = "\tanswer[j++] = i;\n\tj += " + noBranch;
-            System.out.println(out);
-
+            String out = "\tanswer[j++] = i;\n\tj += " + noBranch +";";
+            out += "\n}";
+            // System.out.println(out);
+            finalout += out +"\n";
         }
-
-
-
-
+        return finalout;
     }
 
-    public static void optimize(ArrayList<Float> products) {
+    public static String optimize(ArrayList<Float> products) {
          //generate all basic plans
         ArrayList<SubsetRecord> basicplans = helper.generateBasicPlans(products);
         for (SubsetRecord s: basicplans) {
@@ -130,7 +167,7 @@ public class project2 {
                     
             }
         }
-        printResults(basicplans, products);    
+        return printResults(basicplans, products);    
     }
     public static void main(String[] args) {
         // TODO code application logic here
@@ -171,14 +208,14 @@ public class project2 {
         }
 
         // System.out.println(products);
-
+        String res="";
         for (ArrayList<Float> selectivities : products) {
-            optimize(selectivities);
+            res += optimize(selectivities);
         }
         
-       return;
-        
+        System.out.print(res);
+        writeToFile(res);
+        return;    
     }
     
 }
-
