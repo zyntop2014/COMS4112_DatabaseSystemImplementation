@@ -7,9 +7,6 @@
 import java.io.File;
 import java.io.FileInputStream;
 import java.util.*;
-
-
-
 /**
  *
  * @author yanan
@@ -106,13 +103,9 @@ public class helper {
         ArrayList<SubsetRecord> plans = new ArrayList<>();
         int k = products.size();
         int n = (int) Math.pow(2, k)-1;
-        // System.out.println(products);
-        // getCombinations(plans, products, 4);
-        //to do the combination cal
         for (int i = 1; i < k+1; i++) {
             getCombinations(plans, products, i);
         }
-        
         return plans;
     }
 
@@ -125,12 +118,12 @@ public class helper {
     }
     
     public static float getFcost(SubsetRecord s) {
-            float cost;
-            cost = Float.parseFloat(props.getProperty("t")) +
+        float cost;
+        cost = Float.parseFloat(props.getProperty("t")) +
                     s.number*Float.parseFloat(props.getProperty("r")) +
                     (s.number - 1)*Float.parseFloat(props.getProperty("l")) +
                     s.number*Float.parseFloat(props.getProperty("f"));
-            return cost;  
+        return cost;  
     }
 
    
@@ -155,77 +148,26 @@ public class helper {
         return false;
     }
 
-        public static boolean dominateDmetrics(SubsetRecord s1, SubsetRecord s2) {
+    public static boolean dominateDmetrics(SubsetRecord s1, SubsetRecord s2) {
         float p2;
         float dmetric2;
         float p1 = s1.selectivity;
         float dmetric1 = getFcost(s1);
-        // ArrayList<SubsetRecord> logicTerms = new ArrayList<>();
-        // getLogicAndTerms(s2, logicTerms);
         SubsetRecord sleft = getLeftMostlogicTerm(s2);
 
-   
         p2 = sleft.selectivity;
         dmetric2 = getFcost(sleft);
         if (p1 <= 0.5 && p2 < p1 && dmetric2 < dmetric1) {
             return true;
         }   
-        
-
-        // for (int i = 0; i < logicTerms.size(); i++) {
-        //     SubsetRecord record = logicTerms.get(i);
-        //     //check if it is the left most logic term
-        //     if (!record.elements.containsAll(sleft.elements)) {
-        //         p2 = record.selectivity;
-        //         dmetric2 = getFcost(record);
-        //         if (p1 <= 0.5 && p2 < p1 && dmetric2 < dmetric1) {
-        //             return true;
-        //         }       
-        //     }
-            
-        // } 
-        // return p2 <= p1 && dmetric2 < dmetric1; 
         return false;
     }
 
-    // public static ArrayList<SubsetRecord> getLogicAndTerms (SubsetRecord s) {
-    //     ArrayList<SubsetRecord> logicTerms = new ArrayList<>();
-    //     Queue<SubsetRecord> queue = new LinkedList<>();
-
-    //     if (s.left == null && s.right == null) {
-    //         return logicTerms;
-    //     }
-
-    //     queue.offer(s);
-    //     while (queue.size() != 0) {
-    //         SubsetRecord record =  queue.poll();
-    //         if (s.left ==null && s.right == null) {
-    //             logicTerms.add(record);
-    //             continue;
-    //         }  
-
-    //         if (s.left != null) {
-    //             queue.offer(s.left);
-    //         }
-
-    //         if (s.right != null) {
-    //             queue.offer(s.right);
-    //         }
-    //     }
-
-    //     return logicTerms;
-
-    // }
-
-    public static void getLogicAndTerms (SubsetRecord s, ArrayList<SubsetRecord> logicTerms) {
-        
+    public static void getLogicAndTerms (SubsetRecord s, ArrayList<SubsetRecord> logicTerms) { 
         if (s.left == null && s.right == null) {
             logicTerms.add(s);
             return;
         }
-
-      
-
         if (s.left != null) {
             getLogicAndTerms(s.left, logicTerms);
             s.left.noBranching = 0;
@@ -233,11 +175,9 @@ public class helper {
 
         if (s.right != null) {
             getLogicAndTerms(s.right, logicTerms);
-        
         }
 
     }
-
 
     public static  int findUnionIndex(SubsetRecord s, SubsetRecord s2, ArrayList<SubsetRecord> basicplans) {
         HashSet<Integer> set1 = s.elements;
@@ -253,7 +193,5 @@ public class helper {
             }
         }
         return -1;
-    }
-
-    
+    }   
 }

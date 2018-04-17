@@ -6,11 +6,6 @@
 
 import java.util.*;
 import java.io.*;
-
-
-
-
-
 /**
  *
  * @author yanan
@@ -53,7 +48,6 @@ public class project2 {
             String out = printOptimalPlan(logicTerms);
             finalstr += out;
         }
-    
         // System.out.println("------------------------------------------------------------------");
         // System.out.print("cost:");
         // System.out.println(optimal.bestcost);
@@ -62,9 +56,7 @@ public class project2 {
         finalstr += "cost:";
         finalstr += optimal.bestcost;
         finalstr +="\n\n";
-
         return finalstr;
-
     }
 
     public static void writeToFile(String finalstr) {
@@ -163,8 +155,7 @@ public class project2 {
                         unionSub.left = s2;
                         unionSub.right = s;  
                     } 
-                }      
-                    
+                }             
             }
         }
         return printResults(basicplans, products);    
@@ -200,14 +191,12 @@ public class project2 {
                     p.add(Float.parseFloat(s));
                 }
                 products.add(p);
-                // System.out.println(p);
-                // System.out.println(products);
             }
+            reader.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        // System.out.println(products);
         String res="";
         for (ArrayList<Float> selectivities : products) {
             res += optimize(selectivities);
