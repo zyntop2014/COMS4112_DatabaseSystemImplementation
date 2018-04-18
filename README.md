@@ -1,4 +1,4 @@
-# COMS4112 Database System Implement Project 2
+# COMS4112 Database System Implementation Project 2
 
 ## TeamMember: Yanan Zhang (yz3054) and Li-Chieh Liu (ll3123)
 
