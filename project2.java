@@ -117,7 +117,7 @@ public class project2 {
             // System.out.println("\tanswer[j++] = i;\n}") ;
             finalout += "\tanswer[j++] = i;\n}";
         } else {
-            String out = "\tanswer[j++] = i;\n\tj += " + noBranch +";";
+            String out = "\tanswer[j] = i;\n\tj += " + noBranch +";";
             out += "\n}";
             // System.out.println(out);
             finalout += out +"\n";
