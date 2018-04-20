@@ -145,9 +145,10 @@ int main(int argc, char * argv[]) {
   // you need to substitute this part for your own branch which you want to measure.
 
   for(i = 0; i < LOOP; i++) {
-    if(t1[o1[i]] && (t2[o2[i]] && (t3[o3[i]] && t4[o4[i]]))) {
-      answer[j++] = i;
-    }
+      if ((t1[o1[i]] & t9[o9[i]]) && (t2[o2[i]] & t6[o6[i]]) && (t5[o5[i]] & t8[o8[i]]) {
+          answer[j++] = i;
+          j += (t3[o3[i]] & t4[o4[i]] & t7[o7[i]]);
+      }
   }
 
   // Read the counter
