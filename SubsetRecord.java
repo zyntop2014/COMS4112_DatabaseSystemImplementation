@@ -19,7 +19,14 @@ public class SubsetRecord {
     public SubsetRecord right;
     public int noBranching;         //
     public float selectivity;    //product p of the selectivities of all terms
-    public HashSet<Integer> elements;
+    
+    /*
+     For example, if the input query is 0.7, 0.6, 0.4.
+     Since here, we use 1,2,3, etc. to represent those functions 0.7, 0.6, 0.4 repectively. 
+     So, here, this hash set stores all functions who contribute to this subset. So if the subset is {0.6. 0.4}, 
+      the elements in this hash set are 2, 3. 
+    */ 
+    public HashSet<Integer> elements; 
     
     
     public SubsetRecord(){
