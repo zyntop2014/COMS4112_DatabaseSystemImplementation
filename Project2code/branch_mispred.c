@@ -149,10 +149,10 @@ int main(int argc, char * argv[]) {
 //      answer[j++] = i;
 //    }
       
-    if ((t4[o4[i]]) && (t3[o3[i]]) && (t2[o2[i]]) {
+      if ((t4[o4[i]]) && (t3[o3[i]]) && (t2[o2[i]])) {
           answer[j++] = i;
           j += (t1[o1[i]]);
-    }
+      }
     
   }
 

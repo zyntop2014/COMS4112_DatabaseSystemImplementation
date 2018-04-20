@@ -112,7 +112,7 @@ public class project2 {
             
         }
         // System.out.println(" {") ;
-        finalout += " {\n";
+        finalout += ") {\n";
         if (noBranch.length() == 0) {
             // System.out.println("\tanswer[j++] = i;\n}") ;
             finalout += "\tanswer[j++] = i;\n}";
