@@ -55,7 +55,7 @@ public class project2 {
         finalstr += "------------------------------------------------------------------\n";
         finalstr += "cost:";
         finalstr += optimal.bestcost;
-        finalstr +="\n\n";
+        finalstr +="\n";
         return finalstr;
     }
 
@@ -76,7 +76,7 @@ public class project2 {
 
     public static String getLogicTermStr(SubsetRecord sub) {
         ArrayList<Integer> ele = new ArrayList<>(sub.elements);
-        String str = "(";
+        String str = "";
 
         for (int i = 0; i < ele.size(); i++) {
             str += "t" + ele.get(i) + "[o" + ele.get(i) + "[i]"+ "]";
@@ -84,7 +84,7 @@ public class project2 {
                 str+= " & ";
             }           
         }
-        str += ")";
+        // str += ")";
         return str;
     }
 
@@ -96,7 +96,15 @@ public class project2 {
         // System.out.print("if (");
         for (int i=0; i < subsets.size(); i++) {
             if (subsets.get(i).noBranching == 0) {
-                String out = getLogicTermStr(subsets.get(i));
+                String out ="";
+                if (subsets.get(i).elements.size() != 1) {
+                    out += "(" + getLogicTermStr(subsets.get(i));
+                    out += ")";
+
+                } else {
+                    out += getLogicTermStr(subsets.get(i));
+                }
+           
                 // System.out.print(out);
                 finalout += out;
             }
@@ -115,9 +123,9 @@ public class project2 {
         finalout += ") {\n";
         if (noBranch.length() == 0) {
             // System.out.println("\tanswer[j++] = i;\n}") ;
-            finalout += "\tanswer[j++] = i;\n}";
+            finalout += "    answer[j++] = i;\n}";
         } else {
-            String out = "\tanswer[j] = i;\n\tj += " + noBranch +";";
+            String out = "    answer[j] = i;\n    j += " + noBranch +";";
             out += "\n}";
             // System.out.println(out);
             finalout += out +"\n";
