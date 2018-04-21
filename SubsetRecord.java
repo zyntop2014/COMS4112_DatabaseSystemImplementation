@@ -1,16 +1,13 @@
 /*
-/*
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * COMS4112 Project2
+ * SubsetRecorc class: a strcure that stores the information with the expressions (subset).
  */
 
 import java.util.*;
 
 /**
  *
- * @author yanan
+ * @author yanan, Li-Chieh Liu 
  */
 public class SubsetRecord {
     public int number;                //number of basic terms in the subset
