@@ -96,7 +96,12 @@ public class project2 {
             }           
         }
         // str += ")";
-        return str;
+        if (sub.elements.size() == 1) {
+            return str;
+        } else {
+            return "(" + str + ")";
+        }
+        
     }
   /* 
     This function is to see if the SubsetRecord Object have left and right children, if it don't have any child, 
