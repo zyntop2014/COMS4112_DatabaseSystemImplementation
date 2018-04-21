@@ -1,8 +1,14 @@
+/*
+ * COMS4112 Project2
+ * main function to run the optimization algorithm and output the results
+ */
+
+
 import java.util.*;
 import java.io.*;
 /**
  *
- * @author yanan
+ * @author yanan, Li-Chieh Liu 
  */
 
 public class project2 {
@@ -143,7 +149,7 @@ public class project2 {
 
     // this is the core implementation of Algorithms 4.11
     public static String optimize(ArrayList<Float> products) {
-        //generate all basic plans with all &-terms
+        //generate all 2^k-1 basic plans with all &-terms
         ArrayList<SubsetRecord> basicplans = helper.generateBasicPlans(products);
         //iterate in the basicplans and update the optimal sub-plan and cost
         for (SubsetRecord s: basicplans) {
