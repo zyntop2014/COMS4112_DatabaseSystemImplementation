@@ -1,8 +1,13 @@
+/*
+ * COMS4112 Project2
+ * Main class for runn the query optimization algorithm and output the optimal query plan
+ */
+
 import java.util.*;
 import java.io.*;
 /**
  *
- * @author yanan
+ * @author yanan, Li-Chieh Liu 
  */
 
 public class project2 {
