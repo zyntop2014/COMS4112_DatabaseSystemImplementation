@@ -1,13 +1,8 @@
-/*
- * COMS4112 Project2
- * Main class for runn the query optimization algorithm and output the optimal query plan
- */
-
 import java.util.*;
 import java.io.*;
 /**
  *
- * @author yanan, Li-Chieh Liu 
+ * @author yanan
  */
 
 public class project2 {
@@ -83,11 +78,7 @@ public class project2 {
     }
      
 
-    /* 
-        This function is to see if the SubsetRecord Object have left and right children, if it don't have any child, 
-        it means that the SubsetRecord Object is just an &-term, no sub &-term inside of it, so it will be concatenated by an '&'.
-        Otherwise, the left and right children exist as a pair, so that we know it should be concatenated with an '&&' so we do nothing in this level.
-    */
+    // concatenate an '&' term to string, since it don't have left right children.
     public static String getLogicTermStr(SubsetRecord sub) {
         ArrayList<Integer> ele = new ArrayList<>(sub.elements);
         String str = "";
@@ -101,8 +92,11 @@ public class project2 {
         // str += ")";
         return str;
     }
-
-
+  /* 
+    This function is to see if the SubsetRecord Object have left and right children, if it don't have any child, 
+    it means that the SubsetRecord Object is just an &-term, no sub &-term inside of it, so it will be concatenated by an '&' (done in getLogicTermStr()).
+    Otherwise, the left and right children exist as a pair, so that we know it should be concatenated with an '&&'.
+  */
   public static String printOptimalPlan(ArrayList<SubsetRecord> subsets) {
         String finalout = "";
         String noBranch ="";
