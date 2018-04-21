@@ -117,9 +117,7 @@ public class project2 {
             if (subsets.get(i).noBranching == 0) {
                 String out ="";
                 if (subsets.get(i).elements.size() != 1) {
-                    out += "(" + getLogicTermStr(subsets.get(i));
-                    out += ")";
-
+                    out += getLogicTermStr(subsets.get(i));
                 } else {
                     out += getLogicTermStr(subsets.get(i));
                 }
