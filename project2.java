@@ -149,8 +149,9 @@ public class project2 {
 
     // this is the core implementation of Algorithms 4.11
     public static String optimize(ArrayList<Float> products) {
-         //generate all basic plans
+        //generate all basic plans with all &-terms
         ArrayList<SubsetRecord> basicplans = helper.generateBasicPlans(products);
+        //iterate in the basicplans and update the optimal sub-plan and cost
         for (SubsetRecord s: basicplans) {
             for (SubsetRecord s2 : basicplans) {        
                 HashSet<Integer> retain = new HashSet<Integer>(s2.elements);
@@ -184,18 +185,15 @@ public class project2 {
         return printResults(basicplans, products);    
     }
     public static void main(String[] args) {
-        // TODO code application logic here
-        
-        int k = 3;
+        // initialize selectivites and the properties
         ArrayList<ArrayList<Float>> products = new ArrayList<>();
         Properties props = new Properties();
 
-
+        //load the query and config files 
         if (args.length != 2) {
             System.out.println("Please enter with query file name and config file name");
             return;
         }
-
         String configFile = args[1];
         String queryFile  = args[0];
         helper.loadProps(props, configFile);
@@ -225,7 +223,9 @@ public class project2 {
             res += optimize(selectivities);
         }
         
+        //print the results to consol
         System.out.print(res);
+        //write the results to output.txt
         writeToFile(res);
         return;    
     }
