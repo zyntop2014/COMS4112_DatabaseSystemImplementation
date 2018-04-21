@@ -1,9 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 import java.util.*;
 import java.io.*;
 /**
@@ -16,6 +10,15 @@ public class project2 {
     /**
      * @param args the command line arguments
      */
+    
+    /*
+        In this code, we initially want to use stdout for outputing, 
+        but we finally use a finalstr which keep appending the small segment of result, and print the finalstr all together at the same time.
+        So you might see a lot of commented System.out.println(), just forget about it. We apology.
+    */
+    
+    
+    // The below function is used to append the small segment of result to out finalstr.
     public static String printResults(ArrayList<SubsetRecord> basicplans, ArrayList<Float> products) {
         String finalstr = "";
         finalstr += "==================================================================\n";
@@ -58,7 +61,8 @@ public class project2 {
         finalstr +="\n";
         return finalstr;
     }
-
+    
+    // This function is to write our output to "output.txt" 
     public static void writeToFile(String finalstr) {
         try {
             File file = new File("output.txt");
@@ -74,6 +78,11 @@ public class project2 {
     }
      
 
+    /* 
+        This function is to see if the SubsetRecord Object have left and right children, if it don't have any child, 
+        it means that the SubsetRecord Object is just an &-term, no sub &-term inside of it, so it will be concatenated by an '&'.
+        Otherwise, the left and right children exist as a pair, so that we know it should be concatenated with an '&&' so we do nothing in this level.
+    */
     public static String getLogicTermStr(SubsetRecord sub) {
         ArrayList<Integer> ele = new ArrayList<>(sub.elements);
         String str = "";
@@ -133,6 +142,7 @@ public class project2 {
         return finalout;
     }
 
+    // this is the core implementation of Algorithms 4.11
     public static String optimize(ArrayList<Float> products) {
          //generate all basic plans
         ArrayList<SubsetRecord> basicplans = helper.generateBasicPlans(products);
